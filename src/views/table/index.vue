@@ -13,9 +13,14 @@
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column label="Title">
+      <el-table-column label="Title" width="400">
         <template slot-scope="scope">
           {{ scope.row.title }}
+        </template>
+      </el-table-column>
+      <el-table-column label="Journal" width="110">
+        <template slot-scope="scope">
+          {{ scope.row.journal }}
         </template>
       </el-table-column>
       <el-table-column label="Author" width="110" align="center">
@@ -23,20 +28,16 @@
           <span>{{ scope.row.author }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Pageviews" width="110" align="center">
+      <el-table-column label="Authors" width="300" align="center">
         <template slot-scope="scope">
-          {{ scope.row.pageviews }}
+          {{ scope.row.authors }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="Status" width="110" align="center">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Display_time" width="200">
+      
+      <el-table-column align="center" prop="created_at" label="Date" width="200">
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span>{{ scope.row.display_time }}</span>
+          <span>{{ scope.row.date }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -44,7 +45,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getArticle } from '@/api/table'
 
 export default {
   filters: {
@@ -69,9 +70,10 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
+      getArticle().then(response => {
+        this.list = response.data.lists
         this.listLoading = false
+        
       })
     }
   }

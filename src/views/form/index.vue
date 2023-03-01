@@ -1,43 +1,40 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" label-width="120px">
-      <el-form-item label="Activity name">
-        <el-input v-model="form.name" />
+      <el-form-item label="Title">
+        <el-input v-model="form.title" />
       </el-form-item>
-      <el-form-item label="Activity zone">
-        <el-select v-model="form.region" placeholder="please select your zone">
-          <el-option label="Zone one" value="shanghai" />
-          <el-option label="Zone two" value="beijing" />
-        </el-select>
+      <el-form-item label="Journal">
+        <el-input v-model="form.journal" />
       </el-form-item>
-      <el-form-item label="Activity time">
+      <el-form-item label="Author">
+        <el-input v-model="form.author" />
+      </el-form-item>
+      <el-form-item label="Authors">
+        <el-input v-model="form.authors" />
+      </el-form-item>
+
+      <el-form-item label="Link">
+        <el-input v-model="form.link" />
+      </el-form-item>
+      <el-form-item label="Papercode">
+        <el-input v-model="form.papercode" />
+      </el-form-item>
+      <el-form-item label="Theyear">
+        <el-input v-model="form.theyear" />
+      </el-form-item>
+      
+
+
+      <el-form-item label="Date">
         <el-col :span="11">
-          <el-date-picker v-model="form.date1" type="date" placeholder="Pick a date" style="width: 100%;" />
-        </el-col>
-        <el-col :span="2" class="line">-</el-col>
-        <el-col :span="11">
-          <el-time-picker v-model="form.date2" type="fixed-time" placeholder="Pick a time" style="width: 100%;" />
+          <el-date-picker v-model="form.date" type="date" placeholder="Pick a date" style="width: 100%;" />
         </el-col>
       </el-form-item>
-      <el-form-item label="Instant delivery">
-        <el-switch v-model="form.delivery" />
-      </el-form-item>
-      <el-form-item label="Activity type">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox label="Online activities" name="type" />
-          <el-checkbox label="Promotion activities" name="type" />
-          <el-checkbox label="Offline activities" name="type" />
-          <el-checkbox label="Simple brand exposure" name="type" />
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="Resources">
-        <el-radio-group v-model="form.resource">
-          <el-radio label="Sponsor" />
-          <el-radio label="Venue" />
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="Activity form">
-        <el-input v-model="form.desc" type="textarea" />
+      
+      
+      <el-form-item label="Abstract">
+        <el-input v-model="form.abstract" type="textarea" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">Create</el-button>
@@ -48,24 +45,30 @@
 </template>
 
 <script>
+import { addArticle } from '@/api/table'
 export default {
   data() {
     return {
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        title: '',
+        author: '',
+        authors: '',
+        date: '',
+        abstract: '',
+        theyear: '',
+        papercode: '',
+        link: '',
+        journal:'',
+        
       }
     }
   },
   methods: {
     onSubmit() {
       this.$message('submit!')
+      addArticle(this.form).then().catch(error => {
+        reject(error)
+      })
     },
     onCancel() {
       this.$message({
